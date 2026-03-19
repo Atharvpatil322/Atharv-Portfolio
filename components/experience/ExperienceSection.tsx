@@ -4,12 +4,36 @@ import * as React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { experiences } from "@/data/experience";
 import { ExperienceCard } from "@/components/experience/ExperienceCard";
+import type { IconType } from "react-icons";
+import {
+  SiApachespark,
+  SiApachekafka,
+  SiCelery,
+  SiDocker,
+  SiExpress,
+  SiFastapi,
+  SiJavascript,
+  SiLangchain,
+  SiMongodb,
+  SiNodedotjs,
+  SiOpenjdk,
+  SiPython,
+  SiReact,
+  SiRedis,
+  SiVectorlogozone,
+} from "react-icons/si";
+import { TbBraces, TbDatabase, TbBrandReactNative, TbVectorBezier } from "react-icons/tb";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+type SkillItem = {
+  name: string;
+  icon: IconType;
+};
 
 export function ExperienceSection() {
   const [openCompany, setOpenCompany] = React.useState<string | null>(null);
@@ -93,6 +117,28 @@ export function ExperienceSection() {
         },
       ],
     },
+  ];
+
+  const skills: SkillItem[] = [
+    { name: "Java", icon: SiOpenjdk },
+    { name: "JavaScript", icon: SiJavascript },
+    { name: "Python", icon: SiPython },
+    { name: "SQL", icon: TbDatabase },
+    { name: "MongoDB", icon: SiMongodb },
+    { name: "React", icon: SiReact },
+    { name: "React Native", icon: TbBrandReactNative },
+    { name: "Node", icon: SiNodedotjs },
+    { name: "Express", icon: SiExpress },
+    { name: "FastAPI", icon: SiFastapi },
+    { name: "Redis", icon: SiRedis },
+    { name: "Docker", icon: SiDocker },
+    { name: "Kafka", icon: SiApachekafka },
+    { name: "Celery", icon: SiCelery },
+    { name: "RAG", icon: SiApachespark },
+    { name: "Vector DBs", icon: SiVectorlogozone },
+    { name: "LangChain", icon: SiLangchain },
+    { name: "Fine-tuning", icon: TbBraces },
+    { name: "System Design", icon: TbVectorBezier },
   ];
 
   return (
@@ -407,6 +453,42 @@ export function ExperienceSection() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.06 }}
+          className="mt-14"
+        >
+          <Card className="border-black/10 transition-shadow hover:shadow-lg hover:shadow-black/5">
+            <CardHeader className="pb-3">
+              <p className="text-xs font-medium tracking-wide text-black/50">Skills</p>
+              <CardTitle className="mt-2 text-xl font-semibold tracking-tight text-black sm:text-2xl">
+                Stack I ship with
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="flex flex-wrap gap-2.5">
+                {skills.map((skill) => {
+                  const Icon = skill.icon;
+                  return (
+                    <div
+                      key={skill.name}
+                      className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black/[0.02] px-3 py-1.5 text-sm text-black/80"
+                    >
+                      <Icon className="h-4 w-4 text-black/75" aria-hidden />
+                      <span>{skill.name}</span>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="mt-4 text-sm leading-relaxed text-black/60">
+                ...and a lot more still to learn, <b>this list is always a work in progress.</b>
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
