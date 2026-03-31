@@ -93,6 +93,7 @@ export function ExperienceSection() {
       items: [
         {
           name: "Best Choice Tutors",
+          url: "https://www.bestchoicetutors.com/",
           description:
             "Built a platform where students find tutors... and tutors find students... and both stop ghosting each other (hopefully).",
           points: [
@@ -105,6 +106,7 @@ export function ExperienceSection() {
         },
         {
           name: "PG Patil",
+          url: "https://atharventerprise.co.in/",
           description:
             "Built a portfolio website for my father to take his work from “word of mouth” to “Google search” showcasing years of experience, achievements, and awards in an industry that’s still largely offline.",
           points: [
@@ -523,34 +525,92 @@ export function ExperienceSection() {
                   className="overflow-hidden"
                 >
                   <CardContent className="space-y-7 pt-0">
-                    {projectGroups.map((group) => (
-                      <div key={group.title}>
-                        <h4 className="mb-3 text-sm font-semibold tracking-wide text-black/80">
-                          {group.title}
-                        </h4>
+                    {projectGroups.map((group) => {
+                      const isFreelanceGroup = group.title.includes("Freelance Work");
+                      return (
+                      <div
+                        key={group.title}
+                        className={
+                          isFreelanceGroup
+                            ? "rounded-xl border border-black/10 bg-gradient-to-b from-black/[0.02] to-transparent p-3 sm:p-4"
+                            : ""
+                        }
+                      >
+                        <div className="mb-3 flex items-center justify-between gap-3">
+                          <h4 className="text-sm font-semibold tracking-wide text-black/80">
+                            {group.title}
+                          </h4>
+                          {isFreelanceGroup ? (
+                            <span className="inline-flex items-center rounded-full border border-black/15 bg-white px-2.5 py-1 text-[0.7rem] font-medium tracking-wide text-black/60">
+                              Client Projects · {group.items.length}
+                            </span>
+                          ) : null}
+                        </div>
 
                         <div className="space-y-3">
                           {group.items.map((item) => {
                             const projectKey = `${group.title}-${item.name}`;
                             const isOpen = Boolean(openProjects[projectKey]);
+                            const isFreelanceItem = isFreelanceGroup && "url" in item;
 
                             return (
-                              <div key={item.name} className="rounded-lg border border-black/10">
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    setOpenProjects((prev) => ({
-                                      ...prev,
-                                      [projectKey]: !prev[projectKey],
-                                    }))
-                                  }
-                                  className="block w-full px-4 py-3 text-left focus:outline-none"
-                                  aria-expanded={isOpen}
-                                >
-                                  <p className="text-base font-semibold tracking-tight text-black">
-                                    {item.name}
-                                  </p>
-                                </button>
+                              <div
+                                key={item.name}
+                                className={`rounded-lg border transition ${
+                                  isFreelanceItem
+                                    ? "border-black/15 bg-white shadow-sm shadow-black/5"
+                                    : "border-black/10"
+                                }`}
+                              >
+                                <div className="flex items-center gap-2 px-4 py-3">
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      setOpenProjects((prev) => ({
+                                        ...prev,
+                                        [projectKey]: !prev[projectKey],
+                                      }))
+                                    }
+                                    className="block flex-1 text-left focus:outline-none"
+                                    aria-expanded={isOpen}
+                                  >
+                                    <div className="flex items-center gap-2">
+                                      <p className="text-base font-semibold tracking-tight text-black">
+                                        {item.name}
+                                      </p>
+                                      {isFreelanceItem ? (
+                                        <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[0.68rem] font-medium uppercase tracking-wide text-emerald-700">
+                                          Live
+                                        </span>
+                                      ) : null}
+                                    </div>
+                                  </button>
+                                  {"url" in item ? (
+                                    <a
+                                      href={item.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      aria-label={`Open ${item.name} website`}
+                                      title={`Open ${item.name}`}
+                                      className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-black/15 text-black/70 transition hover:border-black/35 hover:bg-black/5 hover:text-black"
+                                    >
+                                      <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden
+                                        className="h-4 w-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="1.8"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      >
+                                        <path d="M14 3h7v7" />
+                                        <path d="M10 14 21 3" />
+                                        <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+                                      </svg>
+                                    </a>
+                                  ) : null}
+                                </div>
 
                                 <AnimatePresence initial={false}>
                                   {isOpen ? (
@@ -587,7 +647,7 @@ export function ExperienceSection() {
                           })}
                         </div>
                       </div>
-                    ))}
+                    )})}
                   </CardContent>
                 </motion.div>
               ) : null}
