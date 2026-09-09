@@ -30,7 +30,12 @@ export function ExperienceCard({
 
   return (
     <motion.div layout className={cn(className)}>
-      <Card className="transition-shadow hover:shadow-lg hover:shadow-black/5">
+      <Card
+        className={cn(
+          "overflow-hidden border-l-4 transition-all hover:shadow-lg hover:shadow-black/5",
+          isOpen ? "border-l-accent-dark" : "border-l-transparent",
+        )}
+      >
         <button
           type="button"
           onClick={onToggle}
@@ -48,7 +53,12 @@ export function ExperienceCard({
                 </CardDescription>
               </div>
 
-              <div className="shrink-0 text-xs font-medium tracking-wide text-black/40">
+              <div
+                className={cn(
+                  "shrink-0 rounded-full px-2.5 py-1 text-xs font-medium tracking-wide transition-colors",
+                  isOpen ? "bg-accent text-black" : "text-black/40",
+                )}
+              >
                 {isOpen ? "Close" : "Expand"}
               </div>
             </div>
@@ -86,9 +96,9 @@ export function ExperienceCard({
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -6 }}
                         transition={{ duration: 0.18, ease: "easeOut" }}
-                        className="rounded-xl border border-black/10 bg-zinc-50 px-4 py-3 text-sm leading-relaxed text-black/75"
+                        className="rounded-xl border border-black/10 bg-zinc-50 px-4 py-3 text-sm leading-relaxed text-black/75 transition-colors hover:border-accent-dark/40 hover:bg-accent/10"
                       >
-                        <span className="mr-2 text-black/40">•</span>
+                        <span className="mr-2 text-accent-dark">•</span>
                         {point}
                       </motion.li>
                     ))}

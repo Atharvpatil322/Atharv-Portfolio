@@ -6,21 +6,24 @@ export function ConnectFooter() {
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
 
   return (
-    <section className="bg-white px-6 pb-20 pt-2 text-black sm:px-10 sm:pb-28 sm:pt-4">
-      <div className="mx-auto w-full max-w-6xl rounded-2xl border border-black/10 bg-white p-6 text-center sm:p-8">
-        <p className="mx-auto max-w-3xl text-sm leading-relaxed text-black/75 sm:text-base">
-          If you made it this far, either you&apos;re curious, bored, or actually interested... I&apos;ll
-          take it 😄
+    <section id="connect" className="bg-white px-6 pb-20 pt-2 sm:px-10 sm:pb-28 sm:pt-4">
+      <div className="bg-grain mx-auto w-full max-w-6xl overflow-hidden rounded-3xl bg-black px-6 py-14 text-center text-white sm:px-12 sm:py-20">
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+          ( 05 ) Connect
         </p>
-        <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-black/60 sm:text-base">
-          If you&apos;re looking to connect, these little icons below know where to find me.
+        <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+          Let&apos;s build something worth breaking.
+        </h2>
+        <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/60 sm:text-base">
+          If you made it this far, either you&apos;re curious, bored, or actually interested — I&apos;ll
+          take it 😄. These little icons below know where to find me.
         </p>
 
-        <div className="mt-6 flex items-center justify-center gap-3">
+        <div className="mt-8 flex items-center justify-center gap-3">
           <a
             href="mailto:atharvpatil322@gmail.com"
             aria-label="Email Atharv"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/15 text-black/70 transition hover:border-black/35 hover:text-black"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition hover:border-accent hover:bg-accent hover:text-black"
           >
             <svg viewBox="0 0 24 24" aria-hidden className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="5" width="18" height="14" rx="2" />
@@ -32,10 +35,10 @@ export function ConnectFooter() {
             type="button"
             onClick={() => setShowPhoneNumber((prev) => !prev)}
             aria-label="Call Atharv"
-            className={`relative inline-flex h-10 items-center justify-center overflow-hidden rounded-full border text-black/70 transition-all duration-300 ease-out hover:border-black/35 hover:text-black ${
+            className={`relative inline-flex h-11 items-center justify-center overflow-hidden rounded-full border text-white/70 transition-all duration-300 ease-out hover:border-accent hover:text-white ${
               showPhoneNumber
-                ? "w-36 border-black/35 bg-black/5 px-3"
-                : "w-10 border-black/15"
+                ? "w-36 border-accent bg-white/10 px-3"
+                : "w-11 border-white/15"
             }`}
           >
             <span
@@ -61,7 +64,7 @@ export function ConnectFooter() {
             target="_blank"
             rel="noreferrer"
             aria-label="Atharv on GitHub"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/15 text-black/70 transition hover:border-black/35 hover:text-black"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition hover:border-accent hover:bg-accent hover:text-black"
           >
             <svg viewBox="0 0 24 24" aria-hidden className="h-5 w-5" fill="currentColor">
               <path d="M12 .5a12 12 0 0 0-3.8 23.38c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.42-4.04-1.42-.54-1.39-1.33-1.76-1.33-1.76-1.08-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.06 1.83 2.79 1.3 3.47.99.11-.78.42-1.3.76-1.6-2.67-.31-5.47-1.35-5.47-5.98 0-1.32.47-2.4 1.23-3.24-.12-.31-.53-1.56.12-3.25 0 0 1.01-.33 3.3 1.24a11.5 11.5 0 0 1 6 0c2.28-1.57 3.29-1.24 3.29-1.24.66 1.69.25 2.94.12 3.25.77.84 1.23 1.92 1.23 3.24 0 4.65-2.8 5.66-5.48 5.97.43.38.81 1.11.81 2.25v3.33c0 .32.22.7.82.58A12 12 0 0 0 12 .5Z" />
@@ -73,13 +76,17 @@ export function ConnectFooter() {
             target="_blank"
             rel="noreferrer"
             aria-label="Atharv on LinkedIn"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/15 text-black/70 transition hover:border-black/35 hover:text-black"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition hover:border-accent hover:bg-accent hover:text-black"
           >
             <svg viewBox="0 0 24 24" aria-hidden className="h-5 w-5" fill="currentColor">
               <path d="M20.45 20.45h-3.56v-5.58c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43A2.07 2.07 0 1 1 5.34 3.3a2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z" />
             </svg>
           </a>
         </div>
+
+        <p className="mt-10 text-xs text-white/30">
+          © {new Date().getFullYear()} Atharv Patil — built with Next.js, Tailwind &amp; too much coffee.
+        </p>
       </div>
     </section>
   );

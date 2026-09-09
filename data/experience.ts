@@ -8,9 +8,22 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
-    company: "Servein Technologies",
+    company: "Strategy",
     role: "AI Engineer",
-    period: "July 2025 – Present",
+    period: "June 2026 – Present",
+    description: "Currently locked in a windowless room with an espresso machine and three monitors, teaching an LLM to have opinions.",
+    points: [
+      "Status: onboarding still technically in progress (day 47).",
+      "Taught the internal chatbot to stop apologizing before every sentence — partial success.",
+      "Wrote a Slack bot that auto-replies “on it” to every message so I can keep thinking without looking unresponsive.",
+      "Currently reverse-engineering why the roadmap changes every standup — findings pending.",
+      "Full write-up coming once the NDA, the coffee, and my sanity all run out at the same time.",
+    ],
+  },
+  {
+    company: "Nivatech",
+    role: "AI Engineer",
+    period: "July 2025 – May 2026",
     description: "Building AI systems that ship content while keeping GPUs and cloud bills under control.",
     points: [
       "Built a fully automated AI pipeline that generates educational text and videos — Celery workers, Redis queues, and a lot of background jobs quietly doing the heavy lifting.",

@@ -10,8 +10,7 @@ export function Hero() {
         <div className="absolute left-1/2 top-1/2 h-[60rem] w-[60rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40 blur-3xl" />
       </div>
 
-      <div className="absolute inset-x-6 top-6 z-20 flex flex-col gap-2 sm:inset-x-10 sm:top-10 sm:flex-row sm:items-start sm:justify-between">
-        <div className="text-xs tracking-wide text-black/70">© Code by Atharv</div>
+      <div className="absolute inset-x-6 top-6 z-20 flex justify-end sm:inset-x-10 sm:top-10">
         <div className="max-w-[22rem] text-xs leading-relaxed text-black/60 sm:max-w-sm sm:text-right">
           Passionate creative developer building products and solving problems
           through modern technologies.
@@ -56,7 +55,7 @@ export function Hero() {
             <a
               href="#intro"
               aria-label="Scroll to intro section"
-              className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/15 bg-white/70 backdrop-blur transition hover:bg-white"
+              className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/15 bg-white/70 backdrop-blur transition hover:border-accent-dark hover:bg-accent"
             >
               <motion.span
                 initial={{ y: 0 }}

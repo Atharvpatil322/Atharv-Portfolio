@@ -40,6 +40,7 @@ export function ExperienceSection() {
   const [openJourney, setOpenJourney] = React.useState<boolean>(false);
   const [openEducation, setOpenEducation] = React.useState<boolean>(false);
   const [highlightJourney, setHighlightJourney] = React.useState<boolean>(false);
+  const [highlightEducation, setHighlightEducation] = React.useState<boolean>(false);
   const [openProjectsSection, setOpenProjectsSection] = React.useState<boolean>(false);
   const [openProjects, setOpenProjects] = React.useState<Record<string, boolean>>({});
 
@@ -163,8 +164,8 @@ export function ExperienceSection() {
           className="mb-10 flex items-end justify-between gap-6"
         >
           <div>
-            <p className="text-xs font-medium tracking-wide text-black/50">
-              Things I Built &amp; Broke (Experience)
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/40">
+              <span className="text-accent-dark">( 02 )</span> Things I Built &amp; Broke
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
               War stories, but make it readable
@@ -223,8 +224,8 @@ export function ExperienceSection() {
                           aria-label="Toggle journey highlights"
                           className={`relative z-50 inline-flex h-8 w-8 items-center justify-center rounded-md border transition ${
                             highlightJourney
-                              ? "border-black/60 bg-black text-white"
-                              : "border-black/15 bg-white text-black/70 hover:border-black/30 hover:text-black"
+                              ? "border-accent-dark bg-accent text-black"
+                              : "border-black/15 bg-white text-black/70 hover:border-accent-dark hover:bg-accent hover:text-black"
                           }`}
                           title="Highlight summary words"
                         >
@@ -234,13 +235,12 @@ export function ExperienceSection() {
                             className="h-4 w-4"
                             fill="none"
                             stroke="currentColor"
-                            strokeWidth="1.8"
+                            strokeWidth="2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           >
-                            <path d="M3 21h6" />
-                            <path d="m13.4 4.6 6 6" />
-                            <path d="m6.5 17.5 8.9-8.9a2.1 2.1 0 0 0 0-3l-1-1a2.1 2.1 0 0 0-3 0l-8.9 8.9L2 22l8.5-.5Z" />
+                            <path d="m9 11-6 6v3h9l3-3" />
+                            <path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4" />
                           </svg>
                         </button>
                       </div>
@@ -249,7 +249,7 @@ export function ExperienceSection() {
                         <span
                           className={
                             highlightJourney
-                              ? "relative z-50 bg-yellow-200/80 font-semibold text-black"
+                              ? "relative z-50 bg-accent font-semibold text-black"
                               : "font-normal"
                           }
                         >
@@ -259,7 +259,7 @@ export function ExperienceSection() {
                         <span
                           className={
                             highlightJourney
-                              ? "relative z-50 bg-yellow-200/80 font-semibold text-black"
+                              ? "relative z-50 bg-accent font-semibold text-black"
                               : "font-normal"
                           }
                         >
@@ -272,7 +272,7 @@ export function ExperienceSection() {
                         <span
                           className={
                             highlightJourney
-                              ? "relative z-50 bg-yellow-200/80 font-semibold text-black"
+                              ? "relative z-50 bg-accent font-semibold text-black"
                               : "font-normal"
                           }
                         >
@@ -285,7 +285,7 @@ export function ExperienceSection() {
                         <span
                           className={
                             highlightJourney
-                              ? "relative z-50 bg-yellow-200/80 font-semibold text-black"
+                              ? "relative z-50 bg-accent font-semibold text-black"
                               : "font-normal"
                           }
                         >
@@ -299,7 +299,7 @@ export function ExperienceSection() {
                         <span
                           className={
                             highlightJourney
-                              ? "relative z-50 bg-yellow-200/80 font-semibold text-black"
+                              ? "relative z-50 bg-accent font-semibold text-black"
                               : "font-normal"
                           }
                         >
@@ -313,7 +313,7 @@ export function ExperienceSection() {
                         <span
                           className={
                             highlightJourney
-                              ? "relative z-50 bg-yellow-200/80 font-semibold text-black"
+                              ? "relative z-50 bg-accent font-semibold text-black"
                               : "font-normal"
                           }
                         >
@@ -326,7 +326,7 @@ export function ExperienceSection() {
                         <span
                           className={
                             highlightJourney
-                              ? "relative z-50 bg-yellow-200/80 font-semibold text-black"
+                              ? "relative z-50 bg-accent font-semibold text-black"
                               : "font-normal"
                           }
                         >
@@ -339,7 +339,7 @@ export function ExperienceSection() {
                         <span
                           className={
                             highlightJourney
-                              ? "relative z-50 bg-yellow-200/80 font-semibold text-black"
+                              ? "relative z-50 bg-accent font-semibold text-black"
                               : "font-normal"
                           }
                         >
@@ -353,7 +353,7 @@ export function ExperienceSection() {
                         <span
                           className={
                             highlightJourney
-                              ? "relative z-50 bg-yellow-200/80 font-semibold text-black"
+                              ? "relative z-50 bg-accent font-semibold text-black"
                               : "font-normal"
                           }
                         >
@@ -398,30 +398,116 @@ export function ExperienceSection() {
                     transition={{ duration: 0.3, ease: "easeOut" }}
                     className="overflow-hidden"
                   >
-                    <CardContent className="space-y-3 pt-0 text-sm leading-relaxed text-black/75 sm:text-[0.95rem]">
+                    <CardContent
+                      className={`space-y-3 pt-0 text-sm leading-relaxed sm:text-[0.95rem] ${
+                        highlightEducation ? "text-black/45" : "text-black/75"
+                      }`}
+                    >
+                      <div className="flex justify-end">
+                        <button
+                          type="button"
+                          onClick={() => setHighlightEducation((prev) => !prev)}
+                          aria-pressed={highlightEducation}
+                          aria-label="Toggle education highlights"
+                          className={`relative z-50 inline-flex h-8 w-8 items-center justify-center rounded-md border transition ${
+                            highlightEducation
+                              ? "border-accent-dark bg-accent text-black"
+                              : "border-black/15 bg-white text-black/70 hover:border-accent-dark hover:bg-accent hover:text-black"
+                          }`}
+                          title="Highlight academic scores"
+                        >
+                          <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden
+                            className="h-4 w-4"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="m9 11-6 6v3h9l3-3" />
+                            <path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4" />
+                          </svg>
+                        </button>
+                      </div>
                       <p>
                         My academic journey has mostly been about figuring things out step by step
                         sometimes the planned way, sometimes the “why isn&apos;t this working?” way.
                       </p>
                       <p>
-                        I completed my <span className="font-medium">10th (SSC)</span> with{" "}
-                        <span className="font-medium">91%</span>, which at the time felt like a
-                        pretty big achievement and probably the first moment I thought, “Okay, maybe
-                        studying actually works.”
+                        I completed my{" "}
+                        <span
+                          className={
+                            highlightEducation
+                              ? "relative z-50 bg-accent font-semibold text-black"
+                              : "font-medium"
+                          }
+                        >
+                          10th (SSC)
+                        </span>{" "}
+                        with{" "}
+                        <span
+                          className={
+                            highlightEducation
+                              ? "relative z-50 bg-accent font-semibold text-black"
+                              : "font-medium"
+                          }
+                        >
+                          91%
+                        </span>
+                        , which at the time felt like a pretty big achievement and probably the
+                        first moment I thought, “Okay, maybe studying actually works.”
                       </p>
                       <p>
-                        Then came <span className="font-medium">12th (HSC)</span> where I scored{" "}
-                        <span className="font-medium">78%</span>. Let&apos;s just say that phase
-                        involved a mix of studying, exploring random interests, and slowly realizing
-                        that I enjoyed building things more than memorizing them.
+                        Then came{" "}
+                        <span
+                          className={
+                            highlightEducation
+                              ? "relative z-50 bg-accent font-semibold text-black"
+                              : "font-medium"
+                          }
+                        >
+                          12th (HSC)
+                        </span>{" "}
+                        where I scored{" "}
+                        <span
+                          className={
+                            highlightEducation
+                              ? "relative z-50 bg-accent font-semibold text-black"
+                              : "font-medium"
+                          }
+                        >
+                          78%
+                        </span>
+                        . Let&apos;s just say that phase involved a mix of studying, exploring
+                        random interests, and slowly realizing that I enjoyed building things more
+                        than memorizing them.
                       </p>
                       <p>
                         Later I pursued a{" "}
-                        <span className="font-medium">B.E. in Computer Engineering</span>, graduating
-                        with a <span className="font-medium">CGPA of 8.65</span>. Engineering is
-                        where things really started getting interesting: from learning programming,
-                        experimenting and eventually discovering the fun (and chaos) of building real
-                        systems and products.
+                        <span
+                          className={
+                            highlightEducation
+                              ? "relative z-50 bg-accent font-semibold text-black"
+                              : "font-medium"
+                          }
+                        >
+                          B.E. in Computer Engineering
+                        </span>
+                        , graduating with a{" "}
+                        <span
+                          className={
+                            highlightEducation
+                              ? "relative z-50 bg-accent font-semibold text-black"
+                              : "font-medium"
+                          }
+                        >
+                          CGPA of 8.65
+                        </span>
+                        . Engineering is where things really started getting interesting: from
+                        learning programming, experimenting and eventually discovering the fun (and
+                        chaos) of building real systems and products.
                       </p>
                       <p>
                         Looking back, the marks are nice milestones, but the real learning came from
@@ -434,6 +520,15 @@ export function ExperienceSection() {
               </AnimatePresence>
             </Card>
           </motion.div>
+        </div>
+
+        <div className="mb-6">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/40">
+            <span className="text-accent-dark">( 02 )</span> Work
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-black/60 sm:text-base">
+            Where the paychecks came from — and the GPUs I quietly bankrupted along the way.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -463,10 +558,18 @@ export function ExperienceSection() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.06 }}
           className="mt-14"
         >
+          <div className="mb-6">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/40">
+              <span className="text-accent-dark">( 03 )</span> Stack I Know
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-black/60 sm:text-base">
+              Some of it I&apos;ve mastered, some of it just hasn&apos;t caught me googling it yet.
+            </p>
+          </div>
+
           <Card className="border-black/10 transition-shadow hover:shadow-lg hover:shadow-black/5">
             <CardHeader className="pb-3">
-              <p className="text-xs font-medium tracking-wide text-black/50">Skills</p>
-              <CardTitle className="mt-2 text-xl font-semibold tracking-tight text-black sm:text-2xl">
+              <CardTitle className="text-xl font-semibold tracking-tight text-black sm:text-2xl">
                 Stack I ship with
               </CardTitle>
             </CardHeader>
@@ -477,7 +580,7 @@ export function ExperienceSection() {
                   return (
                     <div
                       key={skill.name}
-                      className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black/[0.02] px-3 py-1.5 text-sm text-black/80"
+                      className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black/[0.02] px-3 py-1.5 text-sm text-black/80 transition-colors hover:border-accent-dark/50 hover:bg-accent/15"
                     >
                       <Icon className="h-4 w-4 text-black/75" aria-hidden />
                       <span>{skill.name}</span>
@@ -499,6 +602,15 @@ export function ExperienceSection() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.08 }}
           className="mt-14"
         >
+          <div className="mb-6">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/40">
+              <span className="text-accent-dark">( 04 )</span> Projects
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-black/60 sm:text-base">
+              Proof I can finish things — occasionally on the first try.
+            </p>
+          </div>
+
           <Card className="border-black/10 transition-shadow hover:shadow-lg hover:shadow-black/5">
             <button
               type="button"
@@ -507,8 +619,7 @@ export function ExperienceSection() {
               aria-expanded={openProjectsSection}
             >
               <CardHeader className="pb-3">
-                <p className="text-xs font-medium tracking-wide text-black/50">Projects</p>
-                <CardTitle className="mt-2 text-xl font-semibold tracking-tight text-black sm:text-2xl">
+                <CardTitle className="text-xl font-semibold tracking-tight text-black sm:text-2xl">
                   Built, shipped, survived
                 </CardTitle>
               </CardHeader>
