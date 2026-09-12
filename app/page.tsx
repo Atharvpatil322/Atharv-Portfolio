@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { Intro } from "@/components/Intro";
 import { ExperienceSection } from "@/components/experience/ExperienceSection";
 import { ConnectFooter } from "@/components/ConnectFooter";
+import { Chatbot } from "@/components/Chatbot";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Intro />
       <ExperienceSection />
       <ConnectFooter />
+      <Chatbot />
     </main>
   );
 }
