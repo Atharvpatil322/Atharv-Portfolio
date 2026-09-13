@@ -3,6 +3,7 @@ import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LoadNoticeToast } from "@/components/LoadNoticeToast";
 import { Toaster } from "@/components/ui/sonner";
+import SmoothCursorFollower from "@/components/SmoothCursorFollower";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans-funky",
@@ -32,6 +33,7 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${jetBrainsMono.variable} antialiased`}
       >
         {children}
+        <SmoothCursorFollower />
         <LoadNoticeToast />
         <Toaster />
       </body>

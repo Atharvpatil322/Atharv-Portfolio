@@ -41,7 +41,6 @@ export function ExperienceSection() {
   const [openEducation, setOpenEducation] = React.useState<boolean>(false);
   const [highlightJourney, setHighlightJourney] = React.useState<boolean>(false);
   const [highlightEducation, setHighlightEducation] = React.useState<boolean>(false);
-  const [openProjectsSection, setOpenProjectsSection] = React.useState<boolean>(false);
   const [openProjects, setOpenProjects] = React.useState<Record<string, boolean>>({});
 
   const projectGroups = [
@@ -602,168 +601,211 @@ export function ExperienceSection() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.08 }}
           className="mt-14"
         >
-          <div className="mb-6">
+          <div className="mb-8">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/40">
               <span className="text-accent-dark">( 04 )</span> Projects
             </p>
+            <h3 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+              Built, shipped, survived
+            </h3>
             <p className="mt-2 text-sm leading-relaxed text-black/60 sm:text-base">
               Proof I can finish things — occasionally on the first try.
             </p>
           </div>
 
-          <Card className="border-black/10 transition-shadow hover:shadow-lg hover:shadow-black/5">
-            <button
-              type="button"
-              onClick={() => setOpenProjectsSection((prev) => !prev)}
-              className="block w-full text-left focus:outline-none"
-              aria-expanded={openProjectsSection}
-            >
-              <CardHeader className="pb-3">
-                <CardTitle className="text-xl font-semibold tracking-tight text-black sm:text-2xl">
-                  Built, shipped, survived
-                </CardTitle>
-              </CardHeader>
-            </button>
+          <div className="space-y-12">
+            {projectGroups.map((group, groupIdx) => {
+              const isFreelanceGroup = group.title.includes("Freelance Work");
+              return (
+                <div key={group.title}>
+                  <motion.div
+                    initial={{ opacity: 0, x: -12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="mb-5 flex items-center gap-3"
+                  >
+                    <span className="text-[0.7rem] font-mono text-black/30">
+                      {String(groupIdx + 1).padStart(2, "0")}
+                    </span>
+                    <h4 className="text-sm font-semibold tracking-wide text-black/80">
+                      {group.title}
+                    </h4>
+                    <span className="h-px flex-1 bg-black/10" />
+                    {isFreelanceGroup ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[0.68rem] font-medium tracking-wide text-emerald-700">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        Live · {group.items.length}
+                      </span>
+                    ) : null}
+                  </motion.div>
 
-            <AnimatePresence initial={false}>
-              {openProjectsSection ? (
-                <motion.div
-                  key="projects-section-content"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="overflow-hidden"
-                >
-                  <CardContent className="space-y-7 pt-0">
-                    {projectGroups.map((group) => {
-                      const isFreelanceGroup = group.title.includes("Freelance Work");
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    {group.items.map((item, idx) => {
+                      const projectKey = `${group.title}-${item.name}`;
+                      const isOpen = Boolean(openProjects[projectKey]);
+                      const isFreelanceItem = isFreelanceGroup && "url" in item;
+
                       return (
-                      <div
-                        key={group.title}
-                        className={
-                          isFreelanceGroup
-                            ? "rounded-xl border border-black/10 bg-gradient-to-b from-black/[0.02] to-transparent p-3 sm:p-4"
-                            : ""
-                        }
-                      >
-                        <div className="mb-3 flex items-center justify-between gap-3">
-                          <h4 className="text-sm font-semibold tracking-wide text-black/80">
-                            {group.title}
-                          </h4>
-                          {isFreelanceGroup ? (
-                            <span className="inline-flex items-center rounded-full border border-black/15 bg-white px-2.5 py-1 text-[0.7rem] font-medium tracking-wide text-black/60">
-                              Client Projects · {group.items.length}
-                            </span>
-                          ) : null}
-                        </div>
+                        <motion.div
+                          layout
+                          key={item.name}
+                          initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                          viewport={{ once: true, amount: 0.2 }}
+                          transition={{
+                            duration: 0.55,
+                            ease: [0.16, 1, 0.3, 1],
+                            delay: idx * 0.07,
+                          }}
+                          whileHover={{ y: -4 }}
+                          className={`group relative overflow-hidden rounded-2xl border bg-white transition-[border-color,box-shadow] duration-300 ${
+                            isFreelanceItem
+                              ? "border-black/15 hover:border-emerald-300/70 hover:shadow-lg hover:shadow-emerald-900/5"
+                              : "border-black/10 hover:border-accent-dark/60 hover:shadow-lg hover:shadow-black/5"
+                          }`}
+                        >
+                          <motion.span
+                            aria-hidden
+                            className={`pointer-events-none absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 ${
+                              isFreelanceItem ? "bg-emerald-400" : "bg-accent-dark"
+                            }`}
+                          />
 
-                        <div className="space-y-3">
-                          {group.items.map((item) => {
-                            const projectKey = `${group.title}-${item.name}`;
-                            const isOpen = Boolean(openProjects[projectKey]);
-                            const isFreelanceItem = isFreelanceGroup && "url" in item;
-
-                            return (
-                              <div
-                                key={item.name}
-                                className={`rounded-lg border transition ${
-                                  isFreelanceItem
-                                    ? "border-black/15 bg-white shadow-sm shadow-black/5"
-                                    : "border-black/10"
-                                }`}
-                              >
-                                <div className="flex items-center gap-2 px-4 py-3">
-                                  <button
-                                    type="button"
-                                    onClick={() =>
-                                      setOpenProjects((prev) => ({
-                                        ...prev,
-                                        [projectKey]: !prev[projectKey],
-                                      }))
-                                    }
-                                    className="block flex-1 text-left focus:outline-none"
-                                    aria-expanded={isOpen}
-                                  >
-                                    <div className="flex items-center gap-2">
-                                      <p className="text-base font-semibold tracking-tight text-black">
-                                        {item.name}
-                                      </p>
-                                      {isFreelanceItem ? (
-                                        <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[0.68rem] font-medium uppercase tracking-wide text-emerald-700">
-                                          Live
-                                        </span>
-                                      ) : null}
-                                    </div>
-                                  </button>
-                                  {"url" in item ? (
-                                    <a
-                                      href={item.url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      aria-label={`Open ${item.name} website`}
-                                      title={`Open ${item.name}`}
-                                      className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-black/15 text-black/70 transition hover:border-black/35 hover:bg-black/5 hover:text-black"
-                                    >
-                                      <svg
-                                        viewBox="0 0 24 24"
-                                        aria-hidden
-                                        className="h-4 w-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="1.8"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      >
-                                        <path d="M14 3h7v7" />
-                                        <path d="M10 14 21 3" />
-                                        <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
-                                      </svg>
-                                    </a>
-                                  ) : null}
-                                </div>
-
-                                <AnimatePresence initial={false}>
-                                  {isOpen ? (
-                                    <motion.div
-                                      key={`${projectKey}-content`}
-                                      initial={{ height: 0, opacity: 0 }}
-                                      animate={{ height: "auto", opacity: 1 }}
-                                      exit={{ height: 0, opacity: 0 }}
-                                      transition={{ duration: 0.25, ease: "easeOut" }}
-                                      className="overflow-hidden"
-                                    >
-                                      <div className="space-y-3 px-4 pb-4 text-sm leading-relaxed text-black/70">
-                                        {"projectTitle" in item ? (
-                                          <p>
-                                            <span className="font-medium text-black/85">Title: </span>
-                                            {item.projectTitle}
-                                          </p>
-                                        ) : null}
-                                        <p>{item.description}</p>
-                                        <ul className="space-y-1.5">
-                                          {item.points.map((point) => (
-                                            <li key={point} className="flex gap-2">
-                                              <span className="mt-[0.35rem] h-1.5 w-1.5 rounded-full bg-black/70" />
-                                              <span>{point}</span>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    </motion.div>
-                                  ) : null}
-                                </AnimatePresence>
+                          <div className="flex items-start gap-2 px-4 pt-4">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setOpenProjects((prev) => ({
+                                  ...prev,
+                                  [projectKey]: !prev[projectKey],
+                                }))
+                              }
+                              className="block flex-1 text-left focus:outline-none"
+                              aria-expanded={isOpen}
+                            >
+                              <div className="flex flex-wrap items-center gap-2">
+                                <p className="text-base font-semibold tracking-tight text-black">
+                                  {item.name}
+                                </p>
+                                {isFreelanceItem ? (
+                                  <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[0.68rem] font-medium uppercase tracking-wide text-emerald-700">
+                                    Live
+                                  </span>
+                                ) : null}
                               </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )})}
-                  </CardContent>
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
-          </Card>
+                              <p className="mt-1.5 text-sm leading-relaxed text-black/55">
+                                {item.description}
+                              </p>
+                            </button>
+
+                            <div className="flex shrink-0 items-center gap-1.5">
+                              {"url" in item ? (
+                                <a
+                                  href={item.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label={`Open ${item.name} website`}
+                                  title={`Open ${item.name}`}
+                                  className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-black/15 text-black/70 transition hover:border-black/35 hover:bg-black/5 hover:text-black"
+                                >
+                                  <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden
+                                    className="h-4 w-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.8"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <path d="M14 3h7v7" />
+                                    <path d="M10 14 21 3" />
+                                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+                                  </svg>
+                                </a>
+                              ) : null}
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setOpenProjects((prev) => ({
+                                    ...prev,
+                                    [projectKey]: !prev[projectKey],
+                                  }))
+                                }
+                                aria-label={isOpen ? "Collapse details" : "Expand details"}
+                                className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-black/15 text-black/70 transition hover:border-black/35 hover:bg-black/5 hover:text-black"
+                              >
+                                <motion.svg
+                                  viewBox="0 0 24 24"
+                                  aria-hidden
+                                  className="h-4 w-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  animate={{ rotate: isOpen ? 180 : 0 }}
+                                  transition={{ duration: 0.3, ease: "easeOut" }}
+                                >
+                                  <path d="m6 9 6 6 6-6" />
+                                </motion.svg>
+                              </button>
+                            </div>
+                          </div>
+
+                          <AnimatePresence initial={false}>
+                            {isOpen ? (
+                              <motion.div
+                                key={`${projectKey}-content`}
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                                className="overflow-hidden"
+                              >
+                                <div className="space-y-3 px-4 pb-4 pt-3 text-sm leading-relaxed text-black/70">
+                                  <span className="block h-px w-full bg-black/10" />
+                                  {"projectTitle" in item ? (
+                                    <p>
+                                      <span className="font-medium text-black/85">Title: </span>
+                                      {item.projectTitle}
+                                    </p>
+                                  ) : null}
+                                  <ul className="space-y-1.5">
+                                    {item.points.map((point, pointIdx) => (
+                                      <motion.li
+                                        key={point}
+                                        initial={{ opacity: 0, x: -8 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{
+                                          duration: 0.3,
+                                          ease: "easeOut",
+                                          delay: pointIdx * 0.04,
+                                        }}
+                                        className="flex gap-2"
+                                      >
+                                        <span
+                                          className={`mt-[0.35rem] h-1.5 w-1.5 shrink-0 rounded-full ${
+                                            isFreelanceItem ? "bg-emerald-500" : "bg-accent-dark"
+                                          }`}
+                                        />
+                                        <span>{point}</span>
+                                      </motion.li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              </motion.div>
+                            ) : null}
+                          </AnimatePresence>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </motion.div>
       </div>
     </section>
