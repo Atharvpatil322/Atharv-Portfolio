@@ -78,11 +78,11 @@ function correctNamePronunciation(text: string): string {
 
 function TypingIndicator() {
   return (
-    <div className="flex w-fit items-center gap-1 rounded-xl bg-black/5 px-3 py-2.5">
+    <div className="flex w-fit items-center gap-1 rounded-xl bg-white/[0.06] px-3 py-2.5">
       {[0, 1, 2].map((i) => (
         <motion.span
           key={i}
-          className="h-1.5 w-1.5 rounded-full bg-black/40"
+          className="h-1.5 w-1.5 rounded-full bg-white/50"
           animate={{ y: [0, -4, 0], opacity: [0.4, 1, 0.4] }}
           transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut", delay: i * 0.15 }}
         />
@@ -121,6 +121,12 @@ export function Chatbot() {
       sendMessageRef.current();
     }, AUTO_SEND_SILENCE_MS);
   }
+
+  useEffect(() => {
+    const openChat = () => setOpen(true);
+    window.addEventListener("portfolio:open-chat", openChat);
+    return () => window.removeEventListener("portfolio:open-chat", openChat);
+  }, []);
 
   useEffect(() => {
     const SpeechRecognitionCtor =
@@ -302,7 +308,7 @@ export function Chatbot() {
         type="button"
         onClick={toggleOpen}
         aria-label={open ? "Close chat" : "Ask about Atharv"}
-        className="fixed bottom-6 right-6 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-black text-white shadow-lg shadow-black/25"
+        className="fixed bottom-6 right-6 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-accent text-black shadow-[0_0_40px_-6px_var(--accent)]"
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.92 }}
         transition={{ type: "spring", stiffness: 400, damping: 22 }}
@@ -310,7 +316,7 @@ export function Chatbot() {
         {!open ? (
           <motion.span
             aria-hidden
-            className="absolute inset-0 rounded-full bg-black/30"
+            className="absolute inset-0 rounded-full bg-accent/40"
             animate={{ scale: [1, 1.5, 1.5], opacity: [0.5, 0, 0] }}
             transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
           />
@@ -351,15 +357,15 @@ export function Chatbot() {
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 340, damping: 28 }}
             style={{ transformOrigin: "bottom right" }}
-            className="fixed bottom-24 right-6 z-50 flex h-[28rem] w-[22rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-black/10 bg-white/95 shadow-2xl shadow-black/25 backdrop-blur-xl"
+            className="fixed bottom-24 right-6 z-50 flex h-[28rem] w-[22rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-line bg-[#0d0d14]/95 shadow-2xl shadow-black/60 backdrop-blur-xl"
           >
-            <div className="flex items-center gap-2.5 border-b border-black/10 bg-gradient-to-b from-black/[0.03] to-transparent px-4 py-3">
-              <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black text-white">
+            <div className="flex items-center gap-2.5 border-b border-line bg-gradient-to-b from-white/[0.05] to-transparent px-4 py-3">
+              <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-black">
                 <LuSparkles className="h-4 w-4" aria-hidden />
               </span>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-black">Ask about Atharv</p>
-                <p className="truncate text-xs text-black/50">His work, skills &amp; projects — ask away.</p>
+                <p className="text-sm font-semibold text-foreground">Ask about Atharv</p>
+                <p className="truncate text-xs text-muted">His work, skills &amp; projects — ask away.</p>
               </div>
             </div>
 
@@ -369,7 +375,7 @@ export function Chatbot() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.15, duration: 0.3 }}
-                  className="text-sm text-black/50"
+                  className="text-sm text-muted"
                 >
                   Try asking: &ldquo;What has Atharv worked on recently?&rdquo; or &ldquo;What&apos;s his tech stack?&rdquo;
                 </motion.p>
@@ -399,8 +405,8 @@ export function Chatbot() {
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className={`max-w-[85%] rounded-xl px-3 py-2 text-sm leading-relaxed ${
                         message.role === "user"
-                          ? "ml-auto bg-black text-white"
-                          : "bg-black/5 text-black"
+                          ? "ml-auto bg-accent text-black"
+                          : "bg-white/[0.06] text-foreground"
                       }`}
                     >
                       {message.content}
@@ -424,13 +430,13 @@ export function Chatbot() {
                 e.preventDefault();
                 void sendMessage();
               }}
-              className="border-t border-black/10 bg-gradient-to-b from-black/[0.02] to-transparent p-3"
+              className="border-t border-line p-3"
             >
               <div
-                className={`flex items-end gap-1 rounded-[1.4rem] border bg-white px-2 py-2 shadow-sm transition-all duration-200 ${
+                className={`flex items-end gap-1 rounded-[1.4rem] border bg-white/[0.04] px-2 py-2 shadow-sm transition-all duration-200 ${
                   isListening
                     ? "border-red-300 shadow-red-500/10 ring-2 ring-red-100"
-                    : "border-black/10 focus-within:border-black/25 focus-within:shadow-md"
+                    : "border-line focus-within:border-accent/50"
                 }`}
               >
                 <textarea
@@ -449,7 +455,7 @@ export function Chatbot() {
                   }}
                   placeholder={isListening ? "Listening..." : "Ask something about Atharv..."}
                   disabled={isStreaming}
-                  className="max-h-[120px] flex-1 resize-none bg-transparent px-2 py-1 text-sm leading-relaxed outline-none placeholder:text-black/35 disabled:opacity-60"
+                  className="max-h-[120px] flex-1 resize-none bg-transparent px-2 py-1 text-sm leading-relaxed outline-none placeholder:text-muted disabled:opacity-60"
                 />
                 {speechSupported ? (
                   <motion.button
@@ -462,7 +468,7 @@ export function Chatbot() {
                     className={`relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full transition-colors disabled:opacity-40 ${
                       isListening
                         ? "bg-red-500 text-white shadow-sm shadow-red-500/30"
-                        : "bg-black/[0.04] text-black/60 hover:bg-black/[0.08] hover:text-black"
+                        : "bg-white/[0.06] text-muted hover:bg-white/[0.12] hover:text-foreground"
                     }`}
                   >
                     {isListening ? (
@@ -487,21 +493,21 @@ export function Chatbot() {
                   whileHover={input.trim() ? { scale: 1.06 } : undefined}
                   whileTap={{ scale: 0.9 }}
                   animate={{
-                    backgroundColor: input.trim() ? "#000000" : "rgba(0,0,0,0.08)",
-                    color: input.trim() ? "#ffffff" : "rgba(0,0,0,0.35)",
+                    backgroundColor: input.trim() ? "#cdfa4c" : "rgba(255,255,255,0.08)",
+                    color: input.trim() ? "#000000" : "rgba(255,255,255,0.35)",
                   }}
                   transition={{ duration: 0.18 }}
-                  className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full shadow-sm shadow-black/10 disabled:cursor-not-allowed disabled:shadow-none"
+                  className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:shadow-none"
                 >
                   <LuSendHorizontal className="h-4 w-4" aria-hidden />
                 </motion.button>
               </div>
               <div className="flex items-center justify-between px-2 pt-1.5">
-                <p className="text-[11px] text-black/35">
+                <p className="text-[11px] text-muted">
                   {isListening ? "Listening — pause to auto-send" : "Enter to send · Shift+Enter for a new line"}
                 </p>
                 {input.length > MAX_INPUT_LENGTH * 0.8 ? (
-                  <p className={`text-[11px] tabular-nums ${input.length >= MAX_INPUT_LENGTH ? "text-red-500" : "text-black/35"}`}>
+                  <p className={`text-[11px] tabular-nums ${input.length >= MAX_INPUT_LENGTH ? "text-red-500" : "text-muted"}`}>
                     {input.length}/{MAX_INPUT_LENGTH}
                   </p>
                 ) : null}

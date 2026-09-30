@@ -16,10 +16,12 @@ const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
+export const viewport = { themeColor: "#07070b" };
+
 export const metadata: Metadata = {
   title: "Atharv — Developer Portfolio",
   description:
-    "Minimal developer portfolio: products, experiments, and experience.",
+    "AI Engineer and full-stack developer — RAG pipelines, GPU orchestration, system design, and products that quietly work.",
 };
 
 export default function RootLayout({

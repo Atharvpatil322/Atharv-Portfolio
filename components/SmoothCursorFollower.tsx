@@ -1,115 +1,52 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+
+const INTERACTIVE = "a, button, input, textarea, select, [data-cursor='hover']";
 
 export default function SmoothCursorFollower() {
-  const mousePosition = useRef({ x: 0, y: 0 });
-
-  const dotPosition = useRef({ x: 0, y: 0 });
-  const borderDotPosition = useRef({ x: 0, y: 0 });
-
-  const [renderPos, setRenderPos] = useState({
-    dot: { x: 0, y: 0 },
-    border: { x: 0, y: 0 },
-  });
-  const [isHovering, setIsHovering] = useState(false);
-
-  const DOT_SMOOTHNESS = 0.2;
-  const BORDER_DOT_SMOOTHNESS = 0.1;
+  const [hovering, setHovering] = useState(false);
+  const [pressed, setPressed] = useState(false);
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
+  const dotX = useSpring(x, { stiffness: 900, damping: 45, mass: 0.2 });
+  const dotY = useSpring(y, { stiffness: 900, damping: 45, mass: 0.2 });
+  const ringX = useSpring(x, { stiffness: 160, damping: 20, mass: 0.6 });
+  const ringY = useSpring(y, { stiffness: 160, damping: 20, mass: 0.6 });
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePosition.current = { x: e.clientX, y: e.clientY };
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    const move = (e: MouseEvent) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+      setHovering(!!(e.target as Element | null)?.closest?.(INTERACTIVE));
     };
+    const down = () => setPressed(true);
+    const up = () => setPressed(false);
 
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    const interactiveElements = document.querySelectorAll(
-      "a, button, img, input, textarea, select"
-    );
-    interactiveElements.forEach((element) => {
-      element.addEventListener("mouseenter", handleMouseEnter);
-      element.addEventListener("mouseleave", handleMouseLeave);
-    });
-
-    const animate = () => {
-      const lerp = (start: number, end: number, factor: number) => {
-        return start + (end - start) * factor;
-      };
-
-      dotPosition.current.x = lerp(
-        dotPosition.current.x,
-        mousePosition.current.x,
-        DOT_SMOOTHNESS
-      );
-      dotPosition.current.y = lerp(
-        dotPosition.current.y,
-        mousePosition.current.y,
-        DOT_SMOOTHNESS
-      );
-
-      borderDotPosition.current.x = lerp(
-        borderDotPosition.current.x,
-        mousePosition.current.x,
-        BORDER_DOT_SMOOTHNESS
-      );
-      borderDotPosition.current.y = lerp(
-        borderDotPosition.current.y,
-        mousePosition.current.y,
-        BORDER_DOT_SMOOTHNESS
-      );
-
-      setRenderPos({
-        dot: { x: dotPosition.current.x, y: dotPosition.current.y },
-        border: {
-          x: borderDotPosition.current.x,
-          y: borderDotPosition.current.y,
-        },
-      });
-
-      animationId = requestAnimationFrame(animate);
-    };
-
-    let animationId = requestAnimationFrame(animate);
-
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mousedown", down);
+    window.addEventListener("mouseup", up);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-
-      interactiveElements.forEach((element) => {
-        element.removeEventListener("mouseenter", handleMouseEnter);
-        element.removeEventListener("mouseleave", handleMouseLeave);
-      });
-
-      cancelAnimationFrame(animationId);
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mousedown", down);
+      window.removeEventListener("mouseup", up);
     };
-  }, []);
+  }, [x, y]);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 hidden md:block">
-      <div
-        className="absolute rounded-full bg-black"
-        style={{
-          width: "8px",
-          height: "8px",
-          transform: "translate(-50%, -50%)",
-          left: `${renderPos.dot.x}px`,
-          top: `${renderPos.dot.y}px`,
-        }}
+    <div className="pointer-events-none fixed inset-0 z-[70] hidden mix-blend-difference [@media(hover:hover)_and_(pointer:fine)]:block">
+      <motion.div
+        className="absolute left-0 top-0 h-2 w-2 rounded-full bg-white"
+        style={{ x: dotX, y: dotY, translateX: "-50%", translateY: "-50%" }}
       />
-
-      <div
-        className="absolute rounded-full border border-black"
-        style={{
-          width: isHovering ? "44px" : "28px",
-          height: isHovering ? "44px" : "28px",
-          transform: "translate(-50%, -50%)",
-          left: `${renderPos.border.x}px`,
-          top: `${renderPos.border.y}px`,
-          transition: "width 0.3s, height 0.3s",
-        }}
+      <motion.div
+        className="absolute left-0 top-0 rounded-full border border-white"
+        style={{ x: ringX, y: ringY, translateX: "-50%", translateY: "-50%" }}
+        animate={{ width: hovering ? 56 : 32, height: hovering ? 56 : 32, scale: pressed ? 0.8 : 1 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22 }}
       />
     </div>
   );

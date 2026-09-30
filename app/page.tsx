@@ -1,18 +1,26 @@
-import { NavBar } from "@/components/NavBar";
-import { Hero } from "@/components/Hero";
-import { Intro } from "@/components/Intro";
-import { ExperienceSection } from "@/components/experience/ExperienceSection";
-import { ConnectFooter } from "@/components/ConnectFooter";
+import { SiteShell } from "@/components/SiteShell";
+import { BackgroundFX } from "@/components/BackgroundFX";
+import { Hero } from "@/components/sections/Hero";
+import { Marquee } from "@/components/sections/Marquee";
+import { About } from "@/components/sections/About";
+import { Skills } from "@/components/sections/Skills";
+import { Experience } from "@/components/sections/Experience";
+import { Projects } from "@/components/sections/Projects";
+import { Connect } from "@/components/sections/Connect";
 import { Chatbot } from "@/components/Chatbot";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-black">
-      <NavBar />
+    <main className="noise relative min-h-screen">
+      <BackgroundFX />
+      <SiteShell />
       <Hero />
-      <Intro />
-      <ExperienceSection />
-      <ConnectFooter />
+      <Marquee />
+      <About />
+      <Skills />
+      <Experience />
+      <Projects />
+      <Connect />
       <Chatbot />
     </main>
   );

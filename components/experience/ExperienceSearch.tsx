@@ -30,14 +30,14 @@ export function ExperienceSearch({
 }: ExperienceSearchProps) {
   return (
     <div className={cn("space-y-2", className)}>
-      <label className="text-xs font-medium tracking-wide text-black/50">
+      <label className="text-xs font-medium tracking-wide text-muted">
         Search
       </label>
       <input
         value={query}
         onChange={(e) => onQueryChange(e.target.value)}
         placeholder="Search anything… try 'cloud', 'rag', 'gpu', 'react', etc."
-        className="h-11 w-full rounded-xl border border-black/10 bg-white px-4 text-sm text-black outline-none transition focus:border-black/25"
+        className="h-11 w-full rounded-xl border border-line bg-white/[0.04] px-4 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-accent/60"
       />
     </div>
   );
